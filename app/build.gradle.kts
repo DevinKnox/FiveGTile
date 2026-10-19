@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 providers.gradleProperty("fivegBuildDirectory").orNull?.let {
@@ -9,7 +10,7 @@ providers.gradleProperty("fivegBuildDirectory").orNull?.let {
 
 android {
     namespace = "dev.devinknox.fivegtile"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "dev.cheng.fivegtile"
         minSdk = 31
@@ -42,6 +43,10 @@ kotlin {
 }
 
 dependencies {
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.compose.ui:ui:1.10.4")
+    implementation("androidx.compose.foundation:foundation:1.10.4")
+
     // 只用于编译；Xposed API 必须由设备上的 LSPosed 提供，不能打包进 APK。
     compileOnly(files("libs/xposed-api-82.jar"))
 }
