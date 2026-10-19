@@ -15,8 +15,8 @@ android {
         applicationId = "dev.cheng.fivegtile"
         minSdk = 31
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 3
+        versionName = "1.1.1"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

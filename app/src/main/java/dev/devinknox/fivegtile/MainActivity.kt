@@ -1,9 +1,12 @@
 package dev.devinknox.fivegtile
 
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
+import android.app.StatusBarManager
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.drawable.Icon
+import android.widget.Toast
+import android.content.ActivityNotFoundException
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -47,6 +50,7 @@ import androidx.compose.ui.unit.sp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FiveGTileService.configure(this)
 
         // Compose 自己绘制内容，系统栏仍由 Activity 保持与原 XML 主题一致。
         window.statusBarColor = getColor(R.color.surface_window)
@@ -67,17 +71,46 @@ class MainActivity : ComponentActivity() {
                 deviceSummary = deviceSummary,
                 version = version,
                 onOpenFiveGPage = ::openFiveGPage,
+                onAddFiveGTile = if (DeviceProfile.current() == DeviceProfile.COLOROS) ::addFiveGTile else null,
             )
+        }
+        if (intent.action == "android.service.quicksettings.action.QS_TILE_PREFERENCES") openFiveGPage()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.action == "android.service.quicksettings.action.QS_TILE_PREFERENCES") openFiveGPage()
+    }
+
+    private fun addFiveGTile() {
+        if (Build.VERSION.SDK_INT < 33) return
+        getSystemService(StatusBarManager::class.java).requestAddTileService(
+            ComponentName(this, FiveGTileService::class.java),
+            getString(R.string.fiveg_tile_label),
+            Icon.createWithResource(this, R.drawable.ic_fiveg),
+            mainExecutor,
+        ) { result ->
+            val message = when (result) {
+                StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ADDED,
+                StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ALREADY_ADDED -> R.string.fiveg_tile_added
+                StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_NOT_ADDED -> return@requestAddTileService
+                else -> R.string.fiveg_tile_add_failed
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
 
     private fun openFiveGPage() {
-        // 本机 TeleService manifest 已确认该页面 exported=true，无额外 Activity 权限。
-        val intent = Intent(Intent.ACTION_MAIN).setComponent(
-            ComponentName("com.android.phone", "com.android.phone.settings.MiuiFiveGNetworkSetting")
-        )
         try {
-            startActivity(intent)
+            val profile = DeviceProfile.current()
+            if (profile == DeviceProfile.COLOROS && Build.VERSION.SDK_INT >= 34) {
+                // 一加的 SIM 详情页要求厂商权限，由已加载模块的 SystemUI 校验请求并打开。
+                FiveGSettings.requestFromApp(this, ::showPageUnavailable)
+            } else if (profile != null) {
+                startActivity(FiveGSettings.intent(profile))
+            } else {
+                showPageUnavailable()
+            }
         } catch (_: ActivityNotFoundException) {
             showPageUnavailable()
         } catch (_: SecurityException) {
@@ -85,10 +118,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun showPageUnavailable() {
+    private fun showPageUnavailable(messageRes: Int = R.string.fiveg_page_unavailable_message) {
         AlertDialog.Builder(this)
             .setTitle(R.string.fiveg_page_unavailable_title)
-            .setMessage(R.string.fiveg_page_unavailable_message)
+            .setMessage(messageRes)
             .setPositiveButton(android.R.string.ok, null)
             .show()
     }
@@ -99,6 +132,7 @@ private fun FiveGTileHome(
     deviceSummary: String,
     version: String,
     onOpenFiveGPage: () -> Unit,
+    onAddFiveGTile: (() -> Unit)?,
 ) {
     Box(
         modifier = Modifier
@@ -224,6 +258,24 @@ private fun FiveGTileHome(
             }
 
             Spacer(Modifier.height(18.dp))
+            if (onAddFiveGTile != null) {
+                BasicText(
+                    text = stringResource(R.string.add_fiveg_tile),
+                    style = TextStyle(
+                        color = colorResource(R.color.accent),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(17.dp))
+                        .background(colorResource(R.color.surface_card))
+                        .clickable(onClick = onAddFiveGTile)
+                        .padding(vertical = 17.dp),
+                )
+                Spacer(Modifier.height(18.dp))
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

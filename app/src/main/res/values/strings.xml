@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">5G 快捷开关</string>
-    <string name="module_description">为控制中心添加独立 5G 开关，支持状态同步和长按进入系统设置。</string>
+    <string name="fiveg_tile_label">5G</string>
+    <string name="fiveg_tile_module_unavailable">模块未加载，请重启手机</string>
+    <string name="fiveg_tile_changing">切换中…</string>
+    <string name="add_fiveg_tile">添加5G开关</string>
+    <string name="fiveg_tile_added">5G 开关已添加到控制中心</string>
+    <string name="fiveg_tile_add_failed">系统未能添加，请从控制中心的编辑页面添加「5G」</string>
+    <string name="module_description">为控制中心添加独立 5G 开关，支持状态同步和长按进入系统设置</string>
     <string name="home_subtitle">控制中心里的 5G 快捷开关</string>
     <string name="device_summary_placeholder">当前设备</string>
     <string name="device_summary">当前设备 · %1$s · Android %2$s</string>
@@ -9,16 +15,18 @@
     <string name="enter_fiveg_hint">直接打开系统 5G 设置</string>
     <string name="setup_title">添加到控制中心</string>
     <string name="step_enable_title">启用模块</string>
-    <string name="step_enable_body">在 LSPosed 中启用「5G 快捷开关」。</string>
+    <string name="step_enable_body">在 LSPosed 中启用「5G 快捷开关」</string>
     <string name="step_scope_title">选择作用域</string>
-    <string name="step_scope_body">仅勾选「系统界面」即可。</string>
+    <string name="step_scope_body">仅勾选「系统界面」即可</string>
     <string name="step_add_title">重启并添加开关</string>
-    <string name="step_add_body">重启手机后，在控制中心的编辑页添加「5G」。</string>
+    <string name="step_add_body">重启手机后，在控制中心的编辑页添加「5G」</string>
     <string name="usage_title">轻点切换，长按进入设置</string>
-    <string name="usage_body">5G 磁贴控制默认上网卡的 5G 设置。</string>
+    <string name="usage_body">5G 磁贴控制默认上网卡的 5G 设置</string>
     <string name="app_version">5G 快捷开关 · %1$s</string>
     <string name="fiveg_page_unavailable_title">无法进入5G页面</string>
-    <string name="fiveg_page_unavailable_message">当前系统未开放此页面，请从系统设置进入 5G 设置。</string>
+    <string name="fiveg_page_unavailable_message">当前系统未开放此页面，请从系统设置进入 5G 设置</string>
+    <string name="fiveg_module_not_loaded_message">模块尚未加载到系统界面。请在 LSPosed 中启用本模块，作用域勾选「系统界面」，然后重启手机</string>
+    <string name="fiveg_page_open_failed_message">5G 页面启动失败。请确认已设置默认上网卡，或从系统设置进入 5G 设置</string>
     <string-array name="xposed_scope">
         <item>com.android.systemui</item>
     </string-array>
