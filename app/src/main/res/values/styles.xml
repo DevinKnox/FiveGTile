@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Home.StepNumber" parent="">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:background">@drawable/bg_step_number</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/badge_foreground</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+    <style name="Home.StepTitle" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="Home.StepBody" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+</resources>

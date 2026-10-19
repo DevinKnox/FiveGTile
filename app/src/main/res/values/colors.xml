@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="surface_window">#F5F5F7</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="text_primary">#1D1D1F</color>
+    <color name="text_secondary">#6E6E78</color>
+    <color name="text_tertiary">#85858F</color>
+    <color name="accent">#3D84FF</color>
+    <color name="action_primary">#246BEB</color>
+    <color name="separator">#EEEEF1</color>
+    <color name="badge_background">#E8F0FF</color>
+    <color name="badge_foreground">#1F66CB</color>
+</resources>

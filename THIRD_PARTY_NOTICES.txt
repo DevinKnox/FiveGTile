@@ -1,0 +1,22 @@
+Xposed API 82 (compile-only)
+Source: https://api.xposed.info/de/robv/android/xposed/api/82/api-82.jar
+Project: https://github.com/rovo89/XposedBridge
+License: Apache License 2.0
+The API JAR is supplied for compilation and is not included in the application DEX.
+
+Gradle Wrapper 8.14.3
+Source: https://github.com/gradle/gradle/tree/v8.14.3/gradle/wrapper
+Project: https://github.com/gradle/gradle
+License: Apache License 2.0
+The wrapper scripts and JAR are unmodified upstream files.
+
+Kotlin standard library 2.3.10 (bundled by the Kotlin Android Gradle plugin)
+Project: https://github.com/JetBrains/kotlin
+License: Apache License 2.0
+The standard library is included in the application DEX; the compiler is build-only.
+
+Research reference (not bundled)
+HyperCeiler: https://github.com/ReChronoRain/HyperCeiler
+The public FiveGTile and TileUtils implementations were inspected to identify
+MIUI tile mechanisms. Compatibility details were checked against the user's
+device artifacts. HyperCeiler classes and resources are not included here.
